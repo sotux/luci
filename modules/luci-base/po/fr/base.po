@@ -334,6 +334,11 @@ msgstr ""
 msgid "Always announce default router"
 msgstr ""
 
+msgid ""
+"Always use 40MHz channels even if the secondary channel overlaps. Using this "
+"option does not comply with IEEE 802.11n-2009!"
+msgstr ""
+
 msgid "Annex"
 msgstr ""
 
@@ -1241,6 +1246,9 @@ msgstr "Écriture…"
 
 msgid "Force"
 msgstr "Forcer"
+
+msgid "Force 40MHz mode"
+msgstr ""
 
 msgid "Force CCMP (AES)"
 msgstr "Forcer CCMP (AES)"
