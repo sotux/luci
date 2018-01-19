@@ -55,6 +55,16 @@ flush_rules() {
 	return 0
 }
 
+gfwlist_init() {
+    ipt="iptables -t nat"
+    setname=$(ipset -n list | grep "gfwlist")
+    if [ ! "$setname" ]; then
+        ipset create gfwlist hash:ip
+    fi
+    $ipt -I SS_SPEC_WAN_AC 1 -m set --match-set gfwlist dst -j SS_SPEC_WAN_FW
+    return 0
+}
+
 ipset_init() {
 	ipset -! restore <<-EOF || return 1
 		create ss_spec_src_ac hash:ip hashsize 64
@@ -254,7 +264,7 @@ elif [ "$TPROXY" = 2 ]; then
 	: ${LOCAL_PORT:?"You must assign a port for the udp relay server."}
 fi
 
-flush_rules && ipset_init && ipt_nat && ipt_mangle && export_ipt_rules
+flush_rules && ipset_init && ipt_nat && ipt_mangle && gfwlist_init && export_ipt_rules
 RET=$?
 [ "$RET" = 0 ] || loger 3 "Start failed!"
 exit $RET
