@@ -208,12 +208,7 @@ end
 
 ----------------- MTK Device ------------------
 if vendor == "ralink" and wnet:mode() ~= "sta" then
-
-	radio = s:taboption("general", ListValue, "radio", translate("Radio on/off"))
-	radio:value("1",translate("on"))
-	radio:value("0",translate("off"))
-	radio.default = 1
-
+	
 	wifimode = s:taboption("general", ListValue, "wifimode", translate("Network Mode"))
 	wifimode:value("0", translate("802.11b/g"))
 	wifimode:value("1", translate("802.11b"))
@@ -904,6 +899,7 @@ if vendor == "ralink" then
 --	hidden = s:taboption("general", Flag, "hidden", translate("Hide <abbr title=\"Extended Service Set Identifier\">ESSID</abbr>"))
 --	hidden:depends({mode="ap"})
 --	hidden:depends({mode="ap-wds"})
+	if netmode == "ap" then
 	wmm = s:taboption("general", ListValue, "wmm", translate("WMM Mode"))
         wmm:value("0","Disable")
         wmm:value("1","Enable")
@@ -912,7 +908,7 @@ if vendor == "ralink" then
         APSD:value("0","Disable")
         APSD:value("1","Enable")
         APSD.default = 0
-
+    end
 end
 
 -------------------- MAC80211 Interface ----------------------
