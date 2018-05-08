@@ -208,7 +208,7 @@ end
 
 ----------------- MTK Device ------------------
 if vendor == "ralink" and wnet:mode() ~= "sta" then
-	
+
 	wifimode = s:taboption("general", ListValue, "wifimode", translate("Network Mode"))
 	wifimode:value("0", translate("802.11b/g"))
 	wifimode:value("1", translate("802.11b"))
@@ -1146,8 +1146,10 @@ cipher:depends({encryption="wpa-mixed"})
 cipher:depends({encryption="psk-mixed"})
 -- cipher:value("auto", translate("auto"))
 cipher:value("ccmp", translate("Force CCMP (AES)"))
-cipher:value("tkip", translate("Force TKIP"))
-cipher:value("tkip+ccmp", translate("Force TKIP and CCMP (AES)"))
+if wdev:get("wifimode") ~= "15" then
+	cipher:value("tkip", translate("Force TKIP"))
+	cipher:value("tkip+ccmp", translate("Force TKIP and CCMP (AES)"))
+end
 
 function encr.cfgvalue(self, section)
 	local v = tostring(ListValue.cfgvalue(self, section))
